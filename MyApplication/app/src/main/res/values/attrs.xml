@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressTextView">
+        <attr name="reachBarColor" format="reference" />
+        <attr name="reachTextColor" format="reference" />
+        <attr name="unReachBarColor" format="reference" />
+        <attr name="unReachTextColor" format="reference" />
+        <attr name="progress" format="float" />
+    </declare-styleable>
+</resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -85,10 +86,13 @@ public class ProgressTextView extends TextView
         int reachTextLength = (int)Math.ceil(getText().length() * progress);
         String reachText = getText().toString().substring(0, reachTextLength);
         float startX = (sizeWidth - getPaint().measureText(getText().toString())) / 2;
+        Rect textBounds = new Rect();
+        Paint textPaint = new Paint();
+        textPaint.getTextBounds(getText().toString(), 0, getText().toString().length(), textBounds);
 
-        canvas.drawText(getText(), 0, reachTextLength, startX, sizeHeight / 2.0f, mReachedTextPaint);
+        canvas.drawText(getText(), 0, reachTextLength, startX, (sizeHeight ) / 2.0f + textBounds.height()/2f, mReachedTextPaint);
         canvas.drawText(getText(), reachTextLength, getText().length(), startX + getPaint().measureText(reachText),
-                sizeHeight / 2.0f, mUnreachedTextPaint);
+                (sizeHeight ) / 2.0f + textBounds.height()/2f, mUnreachedTextPaint);
     }
 
     private void initializePainters()

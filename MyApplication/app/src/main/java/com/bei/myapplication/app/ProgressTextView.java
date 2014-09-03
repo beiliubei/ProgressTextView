@@ -58,6 +58,9 @@ public class ProgressTextView extends TextView
                 android.R.attr.layout_width, // 2
                 android.R.attr.layout_height // 3
         };
+        float density = getResources().getDisplayMetrics().density;
+        rect_adius = rect_adius * density;
+
         TypedArray ta = context.obtainStyledAttributes(attrs, attrsArray);
         sizeWidth = ta.getDimensionPixelSize(2, ViewGroup.LayoutParams.MATCH_PARENT);
         sizeHeight = ta.getDimensionPixelSize(3, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -68,15 +71,15 @@ public class ProgressTextView extends TextView
         unReachBarColorId = colorTa.getResourceId(R.styleable.ProgressTextView_unReachBarColor, android.R.color.white);
         reachTextColorId = colorTa.getResourceId(R.styleable.ProgressTextView_reachTextColor, android.R.color.white);
         unReachTextColorId = colorTa.getResourceId(R.styleable.ProgressTextView_unReachTextColor, android.R.color.black);
-        progress = colorTa.getFloat(R.styleable.ProgressTextView_progress, 0.1f);
+        progress = colorTa.getFloat(R.styleable.ProgressTextView_textProgress, 0.1f);
         colorTa.recycle();
-
-        initializePainters();
-        calculateDrawRectF();
     }
 
     @Override protected void onDraw(Canvas canvas)
     {
+        initializePainters();
+        calculateDrawRectF();
+
         canvas.drawRect(mReachedRectF, mReachedBarPaint);
         canvas.drawRect(mUnreachedRectF, mUnreachedBarPaint);
         if (TextUtils.isEmpty(getText()))
@@ -145,6 +148,7 @@ public class ProgressTextView extends TextView
     public void setProgress(float progress)
     {
         this.progress = progress;
+        invalidate();
     }
 
     public int getReachBarColorId()
